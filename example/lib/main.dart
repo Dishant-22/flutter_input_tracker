@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
@@ -23,6 +25,9 @@ class _MyAppState extends State<MyApp> {
   late StreamSubscription<Map> _keyHitSubscription;
 
   Future<void> _startListening() async {
+    List<Map<String, dynamic>> keyLists =await _windowsPlugin.getAllKeys();
+    print(jsonEncode(keyLists));
+
     _keyHitSubscription = _windowsPlugin.keyHitStream!.listen((keyHit) {
       keyList.add(keyHit);
 

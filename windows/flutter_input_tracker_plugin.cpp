@@ -174,7 +174,75 @@ namespace flutter_input_tracker {
         else if (method_call.method_name().compare("stopHooks") == 0) {
             StopHooks();
             result->Success();
-        }
+        }else if (method_call.method_name() == "getAllKeys") {
+  std::vector<flutter::EncodableValue> all_keys;
+
+  // Letters A-Z
+  for (int code = 'A'; code <= 'Z'; ++code) {
+    flutter::EncodableMap keyMap;
+    keyMap[flutter::EncodableValue("key")] = flutter::EncodableValue(std::string(1, static_cast<char>(code)));
+    keyMap[flutter::EncodableValue("keycode")] = flutter::EncodableValue(code);
+    all_keys.push_back(flutter::EncodableValue(keyMap));
+  }
+
+  // Numbers 0-9
+  for (int code = '0'; code <= '9'; ++code) {
+    flutter::EncodableMap keyMap;
+    keyMap[flutter::EncodableValue("key")] = flutter::EncodableValue(std::string(1, static_cast<char>(code)));
+    keyMap[flutter::EncodableValue("keycode")] = flutter::EncodableValue(code);
+    all_keys.push_back(flutter::EncodableValue(keyMap));
+  }
+
+  // Function keys F1-F12
+  for (int i = 1; i <= 12; ++i) {
+    int vk = VK_F1 + i - 1;
+    std::string key = "F" + std::to_string(i);
+    flutter::EncodableMap keyMap;
+    keyMap[flutter::EncodableValue("key")] = flutter::EncodableValue(key);
+    keyMap[flutter::EncodableValue("keycode")] = flutter::EncodableValue(vk);
+    all_keys.push_back(flutter::EncodableValue(keyMap));
+  }
+
+  // Modifier and navigation keys (add as needed)
+  struct KeyDef { const char* label; int vk; };
+  const KeyDef specialKeys[] = {
+    {"ESC", VK_ESCAPE},
+    {"TAB", VK_TAB},
+    {"CAPSLOCK", VK_CAPITAL},
+    {"SHIFT", VK_SHIFT},
+    {"CTRL", VK_CONTROL},
+    {"ALT", VK_MENU},
+    {"SPACE", VK_SPACE},
+    {"ENTER", VK_RETURN},
+    {"BACKSPACE", VK_BACK},
+    {"LEFT", VK_LEFT},
+    {"RIGHT", VK_RIGHT},
+    {"UP", VK_UP},
+    {"DOWN", VK_DOWN},
+    {"HOME", VK_HOME},
+    {"END", VK_END},
+    {"INSERT", VK_INSERT},
+    {"DELETE", VK_DELETE},
+    {"PAGEUP", VK_PRIOR},
+    {"PAGEDOWN", VK_NEXT},
+    {"WIN", VK_LWIN},
+    {"APPS", VK_APPS},
+    {"PRINTSCREEN", VK_SNAPSHOT},
+    {"SCROLLLOCK", VK_SCROLL},
+    {"PAUSE", VK_PAUSE},
+    // Add more as needed
+  };
+
+  for (const auto& k : specialKeys) {
+    flutter::EncodableMap keyMap;
+    keyMap[flutter::EncodableValue("key")] = flutter::EncodableValue(std::string(k.label));
+    keyMap[flutter::EncodableValue("keycode")] = flutter::EncodableValue(k.vk);
+    all_keys.push_back(flutter::EncodableValue(keyMap));
+  }
+
+  result->Success(flutter::EncodableValue(all_keys));
+}
+
         else {
             result->NotImplemented();
         }

@@ -15,5 +15,9 @@ class FlutterInputTracker {
     return platform.stopHooks();
   }
 
+ Future<List<Map<String, dynamic>>> getAllKeys() {
+  return platform.getAllKeys();
+}
+
   Stream<Map>? get keyHitStream => platform.keyHitStream;
 }

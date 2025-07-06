@@ -29,4 +29,6 @@ abstract class FlutterInputTrackerPlatform extends PlatformInterface {
   Future<void> stopHooks() {
     throw UnimplementedError('stopHooks() has not been implemented.');
   }
+
+  Future<List<Map<String, dynamic>>> getAllKeys();
 }

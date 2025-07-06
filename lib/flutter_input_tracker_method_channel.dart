@@ -13,6 +13,14 @@ class MethodChannelFlutterInputTracker extends FlutterInputTrackerPlatform {
   }
 
   @override
+Future<List<Map<String, dynamic>>> getAllKeys() async {
+  final List result = await methodChannel.invokeMethod('getAllKeys');
+  return result.cast<Map<dynamic, dynamic>>()
+      .map((e) => Map<String, dynamic>.from(e))
+      .toList();
+}
+
+  @override
   Future<void> startHooks() async {
     await methodChannel.invokeMethod('startHooks');
   }
