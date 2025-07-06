@@ -1,6 +1,6 @@
 name: flutter_input_tracker
 description: A Flutter plugin for global keyboard and mouse tracking.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Dishant-22
 repository: https://github.com/Dishant-22/flutter_input_tracker
 issue_tracker: https://github.com/Dishant-22/flutter_input_tracker/issues
